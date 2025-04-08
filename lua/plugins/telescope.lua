@@ -7,7 +7,8 @@ return {
 			local builtin = require("telescope.builtin")
 			-- :h Telescope
 			vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-			vim.keymap.set("n", "<leader>fw", builtin.live_grep, {})
+			-- vim.keymap.set("n", "<leader>fw", builtin.live_grep, {})
+			-- vim.keymap.set("n", "<leader>fw", require("telescope").extensions.live_grep_args, { noremap = true })
 			vim.keymap.set("n", "gr", builtin.lsp_references, {})
 			vim.keymap.set("n", "gd", builtin.lsp_definitions, {})
 		end,
@@ -30,7 +31,20 @@ return {
 		version = "*",
 		config = function()
 			require("telescope").load_extension("frecency")
-			vim.keymap.set("n", "<leader>fr", ":Telescope frecency<cr>", {})
+			vim.keymap.set("n", "<leader>fr", ":Telescope frecency default_text=:CWD:<cr>", {})
+		end,
+	},
+	{
+		"nvim-telescope/telescope-live-grep-args.nvim",
+		version = "*",
+		config = function()
+			require("telescope").load_extension("live_grep_args")
+			vim.keymap.set(
+				"n",
+				"<leader>fw",
+				require("telescope").extensions.live_grep_args.live_grep_args,
+				{ noremap = true }
+			)
 		end,
 	},
 }
